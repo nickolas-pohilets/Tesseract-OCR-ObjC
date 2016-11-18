@@ -7,7 +7,7 @@
 //  Under MIT License. See 'LICENCE' for more informations.
 //
 
-#import <UIKit/UIKit.h>
+#import "G8Image.h"
 #import "G8Constants.h"
 #import "G8TesseractDelegate.h"
 
@@ -109,7 +109,7 @@ extern NSInteger const kG8MaxCredibleResolution;
 /**
  *  An image on which Tesseract should perform recognition.
  */
-@property (nonatomic, strong) UIImage *image;
+@property (nonatomic, strong) G8Image *image;
 
 /**
  *  A rectangle to specify the region of the image on which Tesseract should
@@ -254,7 +254,7 @@ extern NSInteger const kG8MaxCredibleResolution;
  *  The result of Tesseract's internal thresholding on the target image or nil,
  *  if engine is not properly configured
  */
-@property (nonatomic, readonly) UIImage *thresholdedImage;
+@property (nonatomic, readonly) G8Image *thresholdedImage;
 
 /**
  *  Create a copy of the target image with boxes (and optionally labels) drawn 
@@ -266,7 +266,7 @@ extern NSInteger const kG8MaxCredibleResolution;
  *
  *  @return The resulting image.
  */
-- (UIImage *)imageWithBlocks:(NSArray *)blocks
+- (G8Image *)imageWithBlocks:(NSArray *)blocks
                     drawText:(BOOL)drawText
                  thresholded:(BOOL)thresholded;
 

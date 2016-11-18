@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Daniele Galiotto - www.g8production.com. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "G8Image.h"
 
 //! Project version number for TesseractOCR.
 FOUNDATION_EXPORT double TesseractOCRVersionNumber;
@@ -23,7 +23,10 @@ FOUNDATION_EXPORT const unsigned char TesseractOCRVersionString[];
 #import "G8TesseractParameters.h"
 #import "G8RecognitionOperation.h"
 #import "G8Constants.h"
+
+#if !TARGET_OS_OSX
 #import "UIImage+G8Filters.h"
+#endif
 
 #endif
 

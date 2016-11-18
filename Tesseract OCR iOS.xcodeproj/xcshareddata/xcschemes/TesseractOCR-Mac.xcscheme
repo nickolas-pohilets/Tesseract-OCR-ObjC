@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0710"
+   LastUpgradeVersion = "0810"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,54 +14,21 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "73C0A77B1A592C2B00D823D4"
+               BlueprintIdentifier = "4A29921A1DDE449700B2B523"
                BuildableName = "TesseractOCR.framework"
-               BlueprintName = "TesseractOCR"
-               ReferencedContainer = "container:Tesseract OCR iOS.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "NO"
-            buildForArchiving = "NO"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "73C0A7851A592C2B00D823D4"
-               BuildableName = "TesseractOCR-Tests.xctest"
-               BlueprintName = "TesseractOCR-Tests"
+               BlueprintName = "TesseractOCR-Mac"
                ReferencedContainer = "container:Tesseract OCR iOS.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
-      buildConfiguration = "Coverage"
+      buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "73C0A7851A592C2B00D823D4"
-               BuildableName = "TesseractOCR-Tests.xctest"
-               BlueprintName = "TesseractOCR-Tests"
-               ReferencedContainer = "container:Tesseract OCR iOS.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "73C0A77B1A592C2B00D823D4"
-            BuildableName = "TesseractOCR.framework"
-            BlueprintName = "TesseractOCR"
-            ReferencedContainer = "container:Tesseract OCR iOS.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>
@@ -78,9 +45,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "73C0A77B1A592C2B00D823D4"
+            BlueprintIdentifier = "4A29921A1DDE449700B2B523"
             BuildableName = "TesseractOCR.framework"
-            BlueprintName = "TesseractOCR"
+            BlueprintName = "TesseractOCR-Mac"
             ReferencedContainer = "container:Tesseract OCR iOS.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -96,9 +63,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "73C0A77B1A592C2B00D823D4"
+            BlueprintIdentifier = "4A29921A1DDE449700B2B523"
             BuildableName = "TesseractOCR.framework"
-            BlueprintName = "TesseractOCR"
+            BlueprintName = "TesseractOCR-Mac"
             ReferencedContainer = "container:Tesseract OCR iOS.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

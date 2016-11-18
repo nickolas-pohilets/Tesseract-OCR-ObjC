@@ -75,7 +75,7 @@
     return canceled;
 }
 
-- (UIImage *)preprocessedImageForTesseract:(G8Tesseract *)tesseract sourceImage:(UIImage *)sourceImage
+- (G8Image *)preprocessedImageForTesseract:(G8Tesseract *)tesseract sourceImage:(G8Image *)sourceImage
 {
     if ([self.delegate respondsToSelector:@selector(preprocessedImageForTesseract:sourceImage:)]) {
         return [self.delegate preprocessedImageForTesseract:tesseract sourceImage:sourceImage];

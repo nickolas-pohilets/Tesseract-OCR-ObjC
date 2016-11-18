@@ -9,8 +9,9 @@
 #ifndef Tesseract_OCR_iOS_G8TesseractDelegate_h
 #define Tesseract_OCR_iOS_G8TesseractDelegate_h
 
+#import "G8Image.h"
+
 @class G8Tesseract;
-@class UIImage;
 
 /**
  *  `G8TesseractDelegate` provides delegate methods for Tesseract recognition.
@@ -46,7 +47,7 @@
  *
  *  @return Preprocessed `UIImage` or nil to perform default preprocessing.
  */
-- (UIImage *)preprocessedImageForTesseract:(G8Tesseract *)tesseract sourceImage:(UIImage *)sourceImage;
+- (G8Image *)preprocessedImageForTesseract:(G8Tesseract *)tesseract sourceImage:(G8Image *)sourceImage;
 
 @end
 

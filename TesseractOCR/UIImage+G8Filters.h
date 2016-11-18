@@ -7,7 +7,7 @@
 //  All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "G8Image.h"
 
 /**
  *  Convenience methods for preprocessing images before performing recognition.

@@ -7,7 +7,7 @@
 //  All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "G8Image.h"
 #import "G8Constants.h"
 
 /**

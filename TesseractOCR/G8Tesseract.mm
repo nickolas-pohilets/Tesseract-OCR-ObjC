@@ -9,10 +9,17 @@
 
 #import "G8Tesseract.h"
 
+#if !TARGET_OS_OSX
 #import "UIImage+G8Filters.h"
+#endif
+
 #import "G8TesseractParameters.h"
 #import "G8Constants.h"
 #import "G8RecognizedBlock.h"
+
+#ifdef fract1
+#undef fract1
+#endif
 
 #import "baseapi.h"
 #import "environ.h"
@@ -56,6 +63,8 @@ namespace tesseract {
 
 @implementation G8Tesseract
 
+#if !TARGET_OS_OSX
+
 + (void)initialize {
     if (self == [G8Tesseract self]) {
         [[NSNotificationCenter defaultCenter] addObserver:self
@@ -70,6 +79,8 @@ namespace tesseract {
     [self clearCache];
     // some more cleaning here if necessary
 }
+
+#endif
 
 + (NSString *)version
 {
@@ -356,7 +367,7 @@ namespace tesseract {
     return _tesseract;
 }
 
-- (void)setEngineImage:(UIImage *)image {
+- (void)setEngineImage:(G8Image *)image {
     
     if (image.size.width <= 0 || image.size.height <= 0) {
         NSLog(@"ERROR: Image has invalid size!");
@@ -369,7 +380,7 @@ namespace tesseract {
         Pix *pix = nullptr;
         
         if ([self.delegate respondsToSelector:@selector(preprocessedImageForTesseract:sourceImage:)]) {
-            UIImage *thresholdedImage = [self.delegate preprocessedImageForTesseract:self sourceImage:image];
+            G8Image *thresholdedImage = [self.delegate preprocessedImageForTesseract:self sourceImage:image];
             if (thresholdedImage != nil) {
                 self.imageSize = thresholdedImage.size;
                 
@@ -500,7 +511,7 @@ namespace tesseract {
     }
 }
 
-- (void)setImage:(UIImage *)image
+- (void)setImage:(G8Image *)image
 {
     if (_image != image) {
         [self setEngineImage:image];
@@ -753,8 +764,8 @@ namespace tesseract {
     
     bool result = YES;
     for (int page = 0; page < images.count && result; page++) {
-        UIImage *image = images[page];
-        if ([image isKindOfClass:[UIImage class]]) {
+        G8Image *image = images[page];
+        if ([image isKindOfClass:[G8Image class]]) {
             Pix *pixs = [self pixForImage:image];
             Pix *pix = pixConvertTo1(pixs, UINT8_MAX / 2);
             pixDestroy(&pixs);
@@ -783,38 +794,60 @@ namespace tesseract {
     return data;
 }
 
-- (UIImage *)imageWithBlocks:(NSArray *)blocks drawText:(BOOL)drawText thresholded:(BOOL)thresholded
+- (G8Image *)imageWithBlocks:(NSArray *)blocks drawText:(BOOL)drawText thresholded:(BOOL)thresholded
 {
-    UIImage *image = thresholded ? self.thresholdedImage : self.image;
-
+    G8Image *image = thresholded ? self.thresholdedImage : self.image;
+    
+#if !TARGET_OS_OSX
     UIGraphicsBeginImageContextWithOptions(image.size, NO, image.scale);
     CGContextRef context = UIGraphicsGetCurrentContext();
     UIGraphicsPushContext(context);
-
+#else
+    [NSGraphicsContext saveGraphicsState];
+    
+    size_t width = (size_t)image.size.width;
+    size_t height = (size_t)image.size.height;
+    size_t bitsPerComponent = 8;
+    size_t bytesPerRow = 0;
+    CGBitmapInfo bitmapInfo = kCGBitmapByteOrder32Host | kCGImageAlphaLast;
+    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+    CGContextRef context = CGBitmapContextCreate(NULL, width, height, bitsPerComponent, bytesPerRow, colorSpace, bitmapInfo);
+    CGColorSpaceRelease(colorSpace);
+    
+    NSGraphicsContext * nscg = [NSGraphicsContext graphicsContextWithGraphicsPort:context flipped:YES];
+    [NSGraphicsContext setCurrentContext:nscg];
+#endif
+    
     [image drawInRect:(CGRect){CGPointZero, image.size}];
-
+    
     CGContextSetLineWidth(context, 2.0f);
-    CGContextSetStrokeColorWithColor(context, [UIColor redColor].CGColor);
-
+    CGContextSetStrokeColorWithColor(context, [G8Color redColor].CGColor);
+    
     for (G8RecognizedBlock *block in blocks) {
         CGRect boundingBox = [block boundingBoxAtImageOfSize:image.size];
         CGRect rect = CGRectMake(boundingBox.origin.x, boundingBox.origin.y,
                                  boundingBox.size.width, boundingBox.size.height);
         CGContextStrokeRect(context, rect);
-
+        
         if (drawText) {
-            NSAttributedString *string =
-                [[NSAttributedString alloc] initWithString:block.text attributes:@{
-                    NSForegroundColorAttributeName: [UIColor redColor]
-                }];
+            NSDictionary* attributes = @{ NSForegroundColorAttributeName: [G8Color redColor] };
+            NSAttributedString *string = [[NSAttributedString alloc] initWithString:block.text
+                                                                         attributes:attributes];
             [string drawAtPoint:(CGPoint){CGRectGetMidX(rect), CGRectGetMaxY(rect) + 2}];
         }
     }
-
-    UIGraphicsPopContext();
-    UIImage *outputImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
     
+#if !TARGET_OS_OSX
+    UIGraphicsPopContext();
+    G8Image *outputImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+#else
+    CGImageRef imageRef = CGBitmapContextCreateImage(context);
+    CGContextRelease(context);
+    [NSGraphicsContext restoreGraphicsState];
+    G8Image* outputImage = [[G8Image alloc] initWithCGImage:imageRef size:image.size];
+    CGImageRelease(imageRef);
+#endif
     return outputImage;
 }
 
@@ -845,7 +878,7 @@ namespace tesseract {
     return returnCode == 0 && self.recognized;
 }
 
-- (UIImage *)thresholdedImage
+- (G8Image *)thresholdedImage
 {
     if (!self.isEngineConfigured) {
         return nil;
@@ -858,7 +891,7 @@ namespace tesseract {
     return [self imageFromPix:pix];
 }
 
-- (UIImage *)imageFromPix:(Pix *)pix
+- (G8Image *)imageFromPix:(Pix *)pix
 {
     // Get Pix parameters
     l_uint32 width = pixGetWidth(pix);
@@ -885,8 +918,10 @@ namespace tesseract {
     CGDataProviderRelease(provider);
     CGColorSpaceRelease(colorSpace);
     
-    // Draw CGImage to create UIImage
-    //      Creating UIImage by [UIImage imageWithCGImage:] worked wrong
+#if !TARGET_OS_OSX
+    
+    // Draw CGImage to create G8Image
+    //      Creating G8Image by [G8Image imageWithCGImage:] worked wrong
     //      and image became broken after some releases.
     CGRect frame = { CGPointZero, CGSizeMake(width, height) };
     UIGraphicsBeginImageContextWithOptions(frame.size, YES, self.image.scale);
@@ -897,21 +932,33 @@ namespace tesseract {
     CGContextScaleCTM(context, 1.0, -1.0);
     CGContextDrawImage(context, frame, cgImage);
 
-    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    G8Image *image = UIGraphicsGetImageFromCurrentImageContext();
 
     UIGraphicsEndImageContext();
     CGImageRelease(cgImage);
+
+#else
+    
+    G8Image *image = [[G8Image alloc] initWithCGImage:cgImage size:CGSizeMake(width, height)];
+    
+#endif
+
     pixDestroy(&pix);
 
     return image;
 }
 
-- (Pix *)pixForImage:(UIImage *)image
+- (Pix *)pixForImage:(G8Image *)image
 {
     int width = image.size.width;
     int height = image.size.height;
 
+#if !TARGET_OS_OSX
     CGImage *cgImage = image.CGImage;
+#else
+    CGImage *cgImage = [image CGImageForProposedRect:NULL context:nil hints:nil];
+#endif
+    
     CFDataRef imageData = CGDataProviderCopyData(CGImageGetDataProvider(cgImage));
     const UInt8 *pixels = CFDataGetBytePtr(imageData);
 
@@ -927,7 +974,7 @@ namespace tesseract {
     void (^copyBlock)(l_uint32 *toAddr, NSUInteger toOffset, const UInt8 *fromAddr, NSUInteger fromOffset) = nil;
     switch (bpp) {
             
-#if 0 // BPP1 start. Uncomment this if UIImage can support 1bpp someday
+#if 0 // BPP1 start. Uncomment this if G8Image can support 1bpp someday
       // Just a reference for the copyBlock
         case 1:
             for (int y = 0; y < height; ++y, data += wpl, pixels += bytesPerRow) {
@@ -950,7 +997,7 @@ namespace tesseract {
             break;
         }
             
-#if 0 // BPP24 start. Uncomment this if UIImage can support 24bpp someday
+#if 0 // BPP24 start. Uncomment this if G8Image can support 24bpp someday
       // Just a reference for the copyBlock
         case 24:
             // Put the colors in the correct places in the line buffer.
@@ -975,16 +1022,21 @@ namespace tesseract {
         default:
             NSLog(@"Cannot convert image to Pix with bpp = %d", bpp); // LCOV_EXCL_LINE
     }
+
     
     if (copyBlock) {
+
+#if !TARGET_OS_OSX
         switch (image.imageOrientation) {
             case UIImageOrientationUp:
+#endif
                 // Maintain byte order consistency across different endianness.
                 for (int y = 0; y < height; ++y, pixels += bytesPerRow, data += wpl) {
                     for (int x = 0; x < width; ++x) {
                         copyBlock(data, x, pixels, x * bytesPerPixel);
                     }
                 }
+#if !TARGET_OS_OSX
                 break;
                 
             case UIImageOrientationUpMirrored:
@@ -1063,6 +1115,7 @@ namespace tesseract {
             default:
                 break;  // LCOV_EXCL_LINE
         }
+#endif
     }
 
     pixSetYRes(pix, (l_int32)self.sourceResolution);
