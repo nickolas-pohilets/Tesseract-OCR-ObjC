@@ -8,7 +8,7 @@
       location = "group:TestsProject/TestsProject.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:Tesseract OCR iOS.xcodeproj">
+      location = "group:TesseractOCR.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Pods/Pods.xcodeproj">

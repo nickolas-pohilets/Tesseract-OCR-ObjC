@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "B191E73CD355A8EA7C8CCCDC6B07B6A7DE020437",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "B191E73CD355A8EA7C8CCCDC6B07B6A7DE020437" : 9223372036854775807,
+    "BD2E9F65CE305BAEA2CF5354A1A6B91EE338C73C" : 9223372036854775807
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "F5F04D16-3521-4F2A-B580-7FF6736ED995",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "B191E73CD355A8EA7C8CCCDC6B07B6A7DE020437" : "Tesseract-OCR\/",
+    "BD2E9F65CE305BAEA2CF5354A1A6B91EE338C73C" : ""
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "TesseractOCR",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "TesseractOCR.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:nickolas-pohilets\/Tesseract-OCR-iOS.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "B191E73CD355A8EA7C8CCCDC6B07B6A7DE020437"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/bitbucket.org\/nickolas_pohilets\/pdfoutliner.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "BD2E9F65CE305BAEA2CF5354A1A6B91EE338C73C"
+    }
+  ]
+}
