@@ -754,7 +754,11 @@ namespace tesseract {
     }
     
     NSString *path = [self.absoluteDataPath stringByAppendingPathComponent:@"tessdata"];
-    tesseract::TessPDFRenderer *renderer = new tesseract::TessPDFRenderer(path.fileSystemRepresentation);
+    NSString *tempOutputBase = [NSTemporaryDirectory() stringByAppendingPathComponent:[NSUUID UUID].UUIDString];
+    tesseract::TessPDFRenderer *renderer = new tesseract::TessPDFRenderer(
+        tempOutputBase.fileSystemRepresentation,
+        path.fileSystemRepresentation
+    );
     
     // Begin producing output
     const char* kUnknownTitle = "Unknown Title";
@@ -786,11 +790,9 @@ namespace tesseract {
         return nil; // LCOV_EXCL_LINE
     }
     
-    const char *pdfData = NULL;
-    int pdfDataLength = 0;
-    renderer->GetOutput(&pdfData, &pdfDataLength);
-    
-    NSData *data = [NSData dataWithBytes:pdfData length:pdfDataLength];
+    NSString *tempOutputPath = [tempOutputBase stringByAppendingPathExtension:@"pdf"];
+    NSData *data = [NSData dataWithContentsOfFile:tempOutputPath];
+    [[NSFileManager defaultManager] removeItemAtPath:tempOutputPath error:nil];
     return data;
 }
 
