@@ -7,15 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4A0E42531DE763D5009EDDC7 /* libjpeg.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A0E42441DE76333009EDDC7 /* libjpeg.a */; };
+		4A0E42541DE763DA009EDDC7 /* liblept.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A0E42451DE76333009EDDC7 /* liblept.a */; };
+		4A0E42551DE763DE009EDDC7 /* libpng.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A0E42461DE76333009EDDC7 /* libpng.a */; };
+		4A0E42561DE763E3009EDDC7 /* libtesseract.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A0E42471DE76333009EDDC7 /* libtesseract.a */; };
+		4A0E42571DE763E6009EDDC7 /* libtiff.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A0E42481DE76333009EDDC7 /* libtiff.a */; };
 		4A29921D1DDE449700B2B523 /* G8RecognizedBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 41B41A501A42ED7600D46246 /* G8RecognizedBlock.m */; };
 		4A29921F1DDE449700B2B523 /* G8RecognitionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 41A95DED1A3AFBF30085093C /* G8RecognitionOperation.m */; };
 		4A2992201DDE449700B2B523 /* G8Tesseract.mm in Sources */ = {isa = PBXBuildFile; fileRef = 64A029D717307CD0002B12E7 /* G8Tesseract.mm */; };
 		4A2992211DDE449700B2B523 /* G8TesseractParameters.m in Sources */ = {isa = PBXBuildFile; fileRef = 41A95DE91A3AF39B0085093C /* G8TesseractParameters.m */; };
-		4A2992231DDE449700B2B523 /* liblept.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 84803A1E1B87921B00577EA2 /* liblept.a */; };
-		4A2992241DDE449700B2B523 /* libtesseract.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 84EA08B91B8DDF6E00AD3FFC /* libtesseract.a */; };
-		4A2992251DDE449700B2B523 /* libjpeg.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 84803A1D1B87921B00577EA2 /* libjpeg.a */; };
-		4A2992261DDE449700B2B523 /* libpng.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 84803A1F1B87921B00577EA2 /* libpng.a */; };
-		4A2992271DDE449700B2B523 /* libtiff.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 84803A211B87921B00577EA2 /* libtiff.a */; };
 		4A2992291DDE449700B2B523 /* queue.h in Headers */ = {isa = PBXBuildFile; fileRef = 84B790811B7B7CD100B1C726 /* queue.h */; };
 		4A29922A1DDE449700B2B523 /* jmorecfg.h in Headers */ = {isa = PBXBuildFile; fileRef = 84803A091B8790DC00577EA2 /* jmorecfg.h */; };
 		4A29922B1DDE449700B2B523 /* gplot.h in Headers */ = {isa = PBXBuildFile; fileRef = 84B790781B7B7CD100B1C726 /* gplot.h */; };
@@ -190,6 +190,11 @@
 		41A95DED1A3AFBF30085093C /* G8RecognitionOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = G8RecognitionOperation.m; sourceTree = "<group>"; };
 		41B41A4F1A42ED7600D46246 /* G8RecognizedBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = G8RecognizedBlock.h; sourceTree = "<group>"; };
 		41B41A501A42ED7600D46246 /* G8RecognizedBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = G8RecognizedBlock.m; sourceTree = "<group>"; };
+		4A0E42441DE76333009EDDC7 /* libjpeg.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libjpeg.a; sourceTree = "<group>"; };
+		4A0E42451DE76333009EDDC7 /* liblept.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = liblept.a; sourceTree = "<group>"; };
+		4A0E42461DE76333009EDDC7 /* libpng.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libpng.a; sourceTree = "<group>"; };
+		4A0E42471DE76333009EDDC7 /* libtesseract.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libtesseract.a; sourceTree = "<group>"; };
+		4A0E42481DE76333009EDDC7 /* libtiff.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libtiff.a; sourceTree = "<group>"; };
 		4A29927A1DDE449700B2B523 /* TesseractOCR.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TesseractOCR.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A29927B1DDE449700B2B523 /* TesseractOCR-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "TesseractOCR-Info.plist"; path = "/Users/npohilets/Tesseract-OCR-iOS/TesseractOCR-Info.plist"; sourceTree = "<absolute>"; };
 		4A29927C1DDE45CB00B2B523 /* G8Image.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = G8Image.h; sourceTree = "<group>"; };
@@ -289,11 +294,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4A2992231DDE449700B2B523 /* liblept.a in Frameworks */,
-				4A2992241DDE449700B2B523 /* libtesseract.a in Frameworks */,
-				4A2992251DDE449700B2B523 /* libjpeg.a in Frameworks */,
-				4A2992261DDE449700B2B523 /* libpng.a in Frameworks */,
-				4A2992271DDE449700B2B523 /* libtiff.a in Frameworks */,
+				4A0E42541DE763DA009EDDC7 /* liblept.a in Frameworks */,
+				4A0E42561DE763E3009EDDC7 /* libtesseract.a in Frameworks */,
+				4A0E42531DE763D5009EDDC7 /* libjpeg.a in Frameworks */,
+				4A0E42551DE763DE009EDDC7 /* libpng.a in Frameworks */,
+				4A0E42571DE763E6009EDDC7 /* libtiff.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -329,6 +334,30 @@
 				64A029D017307CD0002B12E7 /* lib */,
 			);
 			name = Core;
+			sourceTree = "<group>";
+		};
+		4A0E423D1DE76333009EDDC7 /* ios */ = {
+			isa = PBXGroup;
+			children = (
+				84803A1D1B87921B00577EA2 /* libjpeg.a */,
+				84803A1E1B87921B00577EA2 /* liblept.a */,
+				84803A1F1B87921B00577EA2 /* libpng.a */,
+				84803A211B87921B00577EA2 /* libtiff.a */,
+				84EA08B91B8DDF6E00AD3FFC /* libtesseract.a */,
+			);
+			path = ios;
+			sourceTree = "<group>";
+		};
+		4A0E42431DE76333009EDDC7 /* mac */ = {
+			isa = PBXGroup;
+			children = (
+				4A0E42441DE76333009EDDC7 /* libjpeg.a */,
+				4A0E42451DE76333009EDDC7 /* liblept.a */,
+				4A0E42461DE76333009EDDC7 /* libpng.a */,
+				4A0E42471DE76333009EDDC7 /* libtesseract.a */,
+				4A0E42481DE76333009EDDC7 /* libtiff.a */,
+			);
+			path = mac;
 			sourceTree = "<group>";
 		};
 		64A0292F17307C1D002B12E7 /* TesseractOCR */ = {
@@ -449,11 +478,8 @@
 		64A029D017307CD0002B12E7 /* lib */ = {
 			isa = PBXGroup;
 			children = (
-				84803A1D1B87921B00577EA2 /* libjpeg.a */,
-				84803A1E1B87921B00577EA2 /* liblept.a */,
-				84803A1F1B87921B00577EA2 /* libpng.a */,
-				84803A211B87921B00577EA2 /* libtiff.a */,
-				84EA08B91B8DDF6E00AD3FFC /* libtesseract.a */,
+				4A0E423D1DE76333009EDDC7 /* ios */,
+				4A0E42431DE76333009EDDC7 /* mac */,
 			);
 			path = lib;
 			sourceTree = "<group>";
@@ -859,6 +885,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/TesseractOCR/lib",
 					"$(PROJECT_DIR)/TesseractOCR/libtiff-ios/dependencies/lib",
+					"$(PROJECT_DIR)/TesseractOCR/lib/mac",
 				);
 				MACH_O_TYPE = staticlib;
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
@@ -906,6 +933,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/TesseractOCR/lib",
 					"$(PROJECT_DIR)/TesseractOCR/libtiff-ios/dependencies/lib",
+					"$(PROJECT_DIR)/TesseractOCR/lib/mac",
 				);
 				MACH_O_TYPE = staticlib;
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
@@ -950,6 +978,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/TesseractOCR/lib",
 					"$(PROJECT_DIR)/TesseractOCR/libtiff-ios/dependencies/lib",
+					"$(PROJECT_DIR)/TesseractOCR/lib/mac",
 				);
 				MACH_O_TYPE = staticlib;
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
@@ -1062,6 +1091,8 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/TesseractOCR/lib",
 					"$(PROJECT_DIR)/TesseractOCR/libtiff-ios/dependencies/lib",
+					"$(PROJECT_DIR)/TesseractOCR/lib/ios",
+					"$(PROJECT_DIR)/TesseractOCR/lib/mac",
 				);
 				MACH_O_TYPE = staticlib;
 				MTL_ENABLE_DEBUG_INFO = YES;
@@ -1105,6 +1136,8 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/TesseractOCR/lib",
 					"$(PROJECT_DIR)/TesseractOCR/libtiff-ios/dependencies/lib",
+					"$(PROJECT_DIR)/TesseractOCR/lib/ios",
+					"$(PROJECT_DIR)/TesseractOCR/lib/mac",
 				);
 				MACH_O_TYPE = staticlib;
 				MTL_ENABLE_DEBUG_INFO = NO;
@@ -1187,6 +1220,8 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/TesseractOCR/lib",
 					"$(PROJECT_DIR)/TesseractOCR/libtiff-ios/dependencies/lib",
+					"$(PROJECT_DIR)/TesseractOCR/lib/ios",
+					"$(PROJECT_DIR)/TesseractOCR/lib/mac",
 				);
 				MACH_O_TYPE = staticlib;
 				MTL_ENABLE_DEBUG_INFO = YES;

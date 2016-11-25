@@ -1,23 +1,13 @@
 LEPTON_NAME = leptonica-1.72
-PNG_NAME    = libpng-1.6.26
-JPEG_NAME   = jpeg-9a
-TIFF_NAME   = tiff-4.0.6
 
-SDK_IPHONEOS_PATH=$(shell xcrun --sdk iphoneos --show-sdk-path)
-SDK_IPHONESIMULATOR_PATH=$(shell xcrun --sdk iphonesimulator --show-sdk-path)
-XCODE_DEVELOPER_PATH=/Applications/Xcode.app/Contents/Developer
-XCODETOOLCHAIN_PATH=$(XCODE_DEVELOPER_PATH)/Toolchains/XcodeDefault.xctoolchain
-IOS_DEPLOY_TGT="7.0"
+include libtiff-ios/Common.make
 
 TESSERACT_SRC = $(shell pwd)/tesseract-ocr
 LEPTON_SRC = $(shell pwd)/$(LEPTON_NAME)
 IMAGE_SRC = $(shell pwd)/libtiff-ios
-PNG_SRC   = $(IMAGE_SRC)/$(PNG_NAME)
-JPEG_SRC = $(IMAGE_SRC)/$(JPEG_NAME)
-TIFF_SRC = $(IMAGE_SRC)/$(TIFF_NAME)
 
-IMAGE_LIB_DIR = $(IMAGE_SRC)/dependencies/lib/
-IMAGE_INC_DIR = $(IMAGE_SRC)/dependencies/include/
+IMAGE_LIB_DIR = $(IMAGE_SRC)/dependencies/lib
+IMAGE_INC_DIR = $(IMAGE_SRC)/dependencies/include
 INCLUDE_DIR   = $(shell pwd)/include
 LEPT_INC_DIR  = $(INCLUDE_DIR)
 TESS_INC_DIR  = $(INCLUDE_DIR)
@@ -29,45 +19,44 @@ libpngfiles = libpng.a
 libjpegfiles = libjpeg.a
 libtifffiles = libtiff.a
 
-sdks = $(SDK_IPHONEOS_PATH) $(SDK_IPHONEOS_PATH) $(SDK_IPHONEOS_PATH) $(SDK_IPHONESIMULATOR_PATH) $(SDK_IPHONESIMULATOR_PATH)
-archs_all = armv7 armv7s arm64 i386 x86_64
-arch_names_all = arm-apple-darwin7 arm-apple-darwin7s arm-apple-darwin64 i386-apple-darwin x86_64-apple-darwin
-arch_names = $(foreach arch, $(ARCHS), $(call swap, $(arch), $(archs_all), $(arch_names_all) ) )
-ARCHS ?= $(archs_all)
-
-libleptfolders = $(foreach arch, $(arch_names), $(LEPTON_SRC)/$(arch)/)
-libtessfolders = $(foreach arch, $(arch_names), $(TESSERACT_SRC)/$(arch)/)
-libleptfolders_all = $(foreach arch, $(arch_names_all), $(LEPTON_SRC)/$(arch)/)
-libtessfolders_all = $(foreach arch, $(arch_names_all), $(TESSERACT_SRC)/$(arch)/)
+libleptfolders = $(foreach config, $(config_names), $(LEPTON_SRC)/$(config)/)
+libtessfolders = $(foreach config, $(config_names), $(TESSERACT_SRC)/$(config)/)
+libleptfolders_all = $(foreach config, $(config_names_all), $(LEPTON_SRC)/$(config)/)
+libtessfolders_all = $(foreach config, $(config_names_all), $(TESSERACT_SRC)/$(config)/)
 
 libleptmakefile = $(foreach folder, $(libleptfolders), $(addprefix $(folder), Makefile) )
 libtessmakefile = $(foreach folder, $(libtessfolders), $(addprefix $(folder), Makefile) )
 imagesmakefile  = $(addprefix $(IMAGE_SRC)/, Makefile)
 
-libleptfat = $(LIB_FAT_DIR)/$(libleptfiles)
-libtessfat = $(LIB_FAT_DIR)/$(libtessfiles)
+libleptfat = $(foreach platform, $(PLATFORMS), $(LIB_FAT_DIR)/$(platform)/$(libleptfiles))
+libtessfat = $(foreach platform, $(PLATFORMS), $(LIB_FAT_DIR)/$(platform)/$(libtessfiles))
 imagesfat  = $(libpngfat) $(libjpegfat) $(libtifffat)
-libpngfat  = $(LIB_FAT_DIR)/$(libpngfiles)
-libjpegfat = $(LIB_FAT_DIR)/$(libjpegfiles)
-libtifffat = $(LIB_FAT_DIR)/$(libtifffiles)
+libpngfat  = $(foreach platform, $(PLATFORMS), $(LIB_FAT_DIR)/$(platform)/$(libpngfiles))
+libjpegfat = $(foreach platform, $(PLATFORMS), $(LIB_FAT_DIR)/$(platform)/$(libjpegfiles))
+libtifffat = $(foreach platform, $(PLATFORMS), $(LIB_FAT_DIR)/$(platform)/$(libtifffiles))
 
 libtess    = $(foreach folder, $(libtessfolders), $(addprefix $(folder)/lib/, $(libtessfiles)) )
 liblept    = $(foreach folder, $(libleptfolders), $(addprefix $(folder)/lib/, $(libleptfiles)) )
 images     = $(libpng) $(libjpeg) $(libtiff)
-libpng     = $(addprefix $(IMAGE_LIB_DIR), $(libpngfiles))
-libjpeg    = $(addprefix $(IMAGE_LIB_DIR), $(libjpegfiles))
-libtiff    = $(addprefix $(IMAGE_LIB_DIR), $(libtifffiles))
+libpng     = $(foreach platform, $(PLATFORMS), $(addprefix $(IMAGE_LIB_DIR)/$(platform)/, $(libpngfiles)))
+libjpeg    = $(foreach platform, $(PLATFORMS), $(addprefix $(IMAGE_LIB_DIR)/$(platform)/, $(libjpegfiles)))
+libtiff    = $(foreach platform, $(PLATFORMS), $(addprefix $(IMAGE_LIB_DIR)/$(platform)/, $(libtifffiles)))
 
 libtessautogen = $(TESSERACT_SRC)/autogen.sh
 libtessconfig = $(TESSERACT_SRC)/configure
 libleptconfig = $(LEPTON_SRC)/configure
 
-index = $(words $(shell a="$(2)";echo $${a/$(1)*/$(1)} ))
-swap  = $(word $(call index,$(1),$(2)),$(3))
-
 dependant_libs = $(libtessfat) $(libleptfat) $(libpngfat) $(libjpegfat) $(libtifffat)
 
-common_cflags = -L$(LIB_FAT_DIR) -Qunused-arguments -arch $(call swap, $*, $(arch_names_all), $(archs_all)) -pipe -no-cpp-precomp -isysroot $$SDKROOT -miphoneos-version-min=$(IOS_DEPLOY_TGT) -O2
+common_cflags = \
+  	-L$(LIB_FAT_DIR)/$(call get_platform, $*) \
+  	-Qunused-arguments \
+  	-arch $(call get_arch, $*) \
+  	-pipe \
+  	-no-cpp-precomp \
+  	-isysroot $$SDKROOT \
+  	$(call get_min_version $*) \
+  	-O2
 
 .PHONY : all
 all : $(dependant_libs)
@@ -76,8 +65,10 @@ all : $(dependant_libs)
 # TESSERACT-OCR
 #######################
 $(libtessfat) : $(libtess)
-	mkdir -p $(LIB_FAT_DIR)
-	xcrun lipo $(realpath $(addsuffix lib/$(@F), $(libtessfolders_all)) ) -create -output $@
+	mkdir -p $(@D)
+	$(eval p = $(notdir $(@D)))
+	$(eval p_folders = $(call filter_by_platform, $(p), $(libtessfolders_all)))
+	xcrun lipo $(realpath $(addsuffix lib/$(@F), $(p_folders)) ) -create -output $@
 	mkdir -p $(TESS_INC_DIR)
 	cp -rvf $(firstword $(libtessfolders))/include/tesseract $(TESS_INC_DIR)
 
@@ -86,8 +77,9 @@ $(libtess) : $(libtessmakefile)
 
 $(TESSERACT_SRC)/%/Makefile : $(libtessconfig) $(libleptfat)
 	export LIBS="-lz -lpng -ljpeg -ltiff" ; \
-	export SDKROOT="$(call swap, $*, $(arch_names_all), $(sdks))" ; \
+	export SDKROOT="$(call get_sdk, $*)" ; \
 	export CFLAGS="-I$(TESSERACT_SRC)/$*/ $(common_cflags) -fembed-bitcode" ; \
+	echo export CFLAGS="-I$(TESSERACT_SRC)/$*/ $(common_cflags) -fembed-bitcode" ; \
 	export CPPFLAGS=$$CFLAGS ; \
 	export CXXFLAGS="-I$(TESSERACT_SRC)/$*/ $(common_cflags) -Wno-deprecated-register"; \
 	export LDFLAGS="-L$$SDKROOT/usr/lib/ -L$(LEPTON_SRC)/$*/src/.libs" ; \
@@ -95,7 +87,7 @@ $(TESSERACT_SRC)/%/Makefile : $(libtessconfig) $(libleptfat)
 	mkdir -p $(@D) ; \
 	cd $(@D) ; \
 	ln -s $(LEPTON_SRC)/src/ leptonica ; \
-	../configure --host=$* --prefix=`pwd` --enable-shared=no --disable-graphics
+	../configure --host=$(call get_host_name, $*) --prefix=`pwd` --enable-shared=no --disable-graphics
 
 $(libtessconfig) : $(libtessautogen)
 	cd $(@D) && ./autogen.sh 2> /dev/null
@@ -104,8 +96,10 @@ $(libtessconfig) : $(libtessautogen)
 # LEPTONLIB
 #######################
 $(libleptfat) : $(liblept)
-	mkdir -p $(LIB_FAT_DIR)
-	xcrun lipo $(realpath $(addsuffix lib/$(@F), $(libleptfolders_all)) ) -create -output $@
+	mkdir -p $(@D)
+	$(eval p = $(notdir $(@D)))
+	$(eval p_folders = $(call filter_by_platform, $(p), $(libleptfolders_all)))
+	xcrun lipo $(realpath $(addsuffix lib/$(@F), $(p_folders)) ) -create -output $@
 	mkdir -p $(LEPT_INC_DIR)
 	cp -rvf $(firstword $(libleptfolders))/include/leptonica $(LEPT_INC_DIR)
 
@@ -115,27 +109,27 @@ $(liblept) : $(libleptmakefile)
 
 $(LEPTON_SRC)/%/Makefile : $(imagesfat) $(libleptconfig)
 	export LIBS="-lz -lpng -ljpeg -ltiff" ; \
-	export SDKROOT="$(call swap, $*, $(arch_names_all), $(sdks))" ; \
+	export SDKROOT="$(call get_sdk, $*)" ; \
 	export CFLAGS="-I$(INCLUDE_DIR) $(common_cflags) -fembed-bitcode" ; \
 	export CPPFLAGS=$$CFLAGS ; \
 	export CXXFLAGS="-I$(INCLUDE_DIR) $(common_cflags) -Wno-deprecated-register"; \
-    export LDFLAGS="-L$$SDKROOT/usr/lib/ -L$(LIB_FAT_DIR)" ; \
+    export LDFLAGS="-L$$SDKROOT/usr/lib/ -L$(LIB_FAT_DIR)/$(call get_platform, $*)/" ; \
 	mkdir -p $(@D) ; \
 	cd $(@D) ; \
-    ../configure --host=$* --prefix=`pwd` --enable-shared=no --disable-programs --with-zlib --with-libpng --with-jpeg --without-giflib --with-libtiff
+    ../configure --host=$(call get_host_name, $*) --prefix=`pwd` --enable-shared=no --disable-programs --with-zlib --with-libpng --with-jpeg --without-giflib --with-libtiff
 
 #######################
 # Build libtiff and all of it's dependencies
 #######################
-$(imagesfat) : $(images)
+$(LIB_FAT_DIR)/%.a : $(IMAGE_LIB_DIR)/%.a
 	mkdir -p $(@D)
 	cp -rvf $? $(@D)
 	mkdir -p $(INCLUDE_DIR)
-	cp -rvf $(IMAGE_INC_DIR) $(INCLUDE_DIR)
+	cp -rvf $(IMAGE_INC_DIR)/ $(INCLUDE_DIR)
 
 $(images) : $(imagesmakefile) FORCE
-	cd $(IMAGE_SRC) ; \
-	until `$(MAKE) -s`; do sleep 5; done
+	cd $(IMAGE_SRC); \
+	$(MAKE)
 
 #######################
 # Download dependencies
