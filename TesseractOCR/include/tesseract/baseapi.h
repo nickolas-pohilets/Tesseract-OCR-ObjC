@@ -20,8 +20,8 @@
 #ifndef TESSERACT_API_BASEAPI_H__
 #define TESSERACT_API_BASEAPI_H__
 
-#define TESSERACT_VERSION_STR "3.04.02dev"
-#define TESSERACT_VERSION 0x030402
+#define TESSERACT_VERSION_STR "3.05.00dev"
+#define TESSERACT_VERSION 0x030500
 #define MAKE_VERSION(major, minor, patch) (((major) << 16) | ((minor) << 8) | \
                                             (patch))
 
@@ -587,8 +587,24 @@ class TESS_API TessBaseAPI {
    * Make a HTML-formatted string with hOCR markup from the internal
    * data structures.
    * page_number is 0-based but will appear in the output as 1-based.
+   * monitor can be used to
+   *  cancel the recognition
+   *  receive progress callbacks
+   */
+  char* GetHOCRText(ETEXT_DESC* monitor, int page_number);
+
+  /**
+   * Make a HTML-formatted string with hOCR markup from the internal
+   * data structures.
+   * page_number is 0-based but will appear in the output as 1-based.
    */
   char* GetHOCRText(int page_number);
+
+  /**
+   * Make a TSV-formatted string from the internal data structures.
+   * page_number is 0-based but will appear in the output as 1-based.
+   */
+  char* GetTSVText(int page_number);
 
   /**
    * The recognized text is returned as a char* which is coded in the same
@@ -734,13 +750,9 @@ class TESS_API TessBaseAPI {
    */
   static void NormalizeTBLOB(TBLOB *tblob, ROW *row, bool numeric_mode);
 
-  Tesseract* tesseract() const {
-    return tesseract_;
-  }
+  Tesseract* tesseract() const { return tesseract_; }
 
-  OcrEngineMode oem() const {
-    return last_oem_requested_;
-  }
+  OcrEngineMode oem() const { return last_oem_requested_; }
 
   void InitTruthCallback(TruthCallback *cb) { truth_cb_ = cb; }
 
@@ -882,7 +894,7 @@ class TESS_API TessBaseAPI {
                             const char* retry_config, int timeout_millisec,
                             TessResultRenderer* renderer,
                             int tessedit_page_number);
-  // TIFF supports multipage so gets special consideration
+  // TIFF supports multipage so gets special consideration.
   bool ProcessPagesMultipageTiff(const unsigned char *data,
                                  size_t size,
                                  const char* filename,

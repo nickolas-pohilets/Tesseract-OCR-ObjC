@@ -1,4 +1,4 @@
-LEPTON_NAME = leptonica-1.72
+LEPTON_NAME = leptonica-1.73
 
 include libtiff-ios/Common.make
 
