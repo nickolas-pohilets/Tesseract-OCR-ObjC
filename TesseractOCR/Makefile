@@ -55,7 +55,7 @@ common_cflags = \
   	-pipe \
   	-no-cpp-precomp \
   	-isysroot $$SDKROOT \
-  	$(call get_min_version $*) \
+  	$(call get_min_version, $*) \
   	-O2
 
 .PHONY : all
@@ -78,6 +78,7 @@ $(libtess) : $(libtessmakefile)
 $(TESSERACT_SRC)/%/Makefile : $(libtessconfig) $(libleptfat)
 	export LIBS="-lz -lpng -ljpeg -ltiff" ; \
 	export SDKROOT="$(call get_sdk, $*)" ; \
+	echo export CFLAGS="-I$(TESSERACT_SRC)/$*/ $(common_cflags) -fembed-bitcode" ; \
 	export CFLAGS="-I$(TESSERACT_SRC)/$*/ $(common_cflags) -fembed-bitcode" ; \
 	echo export CFLAGS="-I$(TESSERACT_SRC)/$*/ $(common_cflags) -fembed-bitcode" ; \
 	export CPPFLAGS=$$CFLAGS ; \

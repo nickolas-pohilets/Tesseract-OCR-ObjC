@@ -93,6 +93,7 @@
 		4A2992741DDE449700B2B523 /* capi.h in Headers */ = {isa = PBXBuildFile; fileRef = 84B790AA1B7B7CE500B1C726 /* capi.h */; };
 		4A2992861DDF8BFC00B2B523 /* G8Image.h in Headers */ = {isa = PBXBuildFile; fileRef = 4A29927C1DDE45CB00B2B523 /* G8Image.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4A2992871DDF8C0500B2B523 /* G8Image.h in Headers */ = {isa = PBXBuildFile; fileRef = 4A29927C1DDE45CB00B2B523 /* G8Image.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4AA351B81DE9B1B400207910 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AA351B71DE9B1B400207910 /* libz.tbd */; };
 		73C0A7961A5932C400D823D4 /* G8Tesseract.h in Headers */ = {isa = PBXBuildFile; fileRef = 64A029D617307CD0002B12E7 /* G8Tesseract.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		73C0A7971A5932C800D823D4 /* G8Tesseract.mm in Sources */ = {isa = PBXBuildFile; fileRef = 64A029D717307CD0002B12E7 /* G8Tesseract.mm */; };
 		73C0A7981A5932CC00D823D4 /* G8TesseractDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4141211F1A4C578800583ED4 /* G8TesseractDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -198,6 +199,7 @@
 		4A29927A1DDE449700B2B523 /* TesseractOCR.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TesseractOCR.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A29927B1DDE449700B2B523 /* TesseractOCR-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "TesseractOCR-Info.plist"; path = "/Users/npohilets/Tesseract-OCR-iOS/TesseractOCR-Info.plist"; sourceTree = "<absolute>"; };
 		4A29927C1DDE45CB00B2B523 /* G8Image.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = G8Image.h; sourceTree = "<group>"; };
+		4AA351B71DE9B1B400207910 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.12.sdk/usr/lib/libz.tbd; sourceTree = DEVELOPER_DIR; };
 		645C864A18698EBA00B27B19 /* README_howto_compile_libaries.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README_howto_compile_libaries.md; sourceTree = "<group>"; };
 		646772C318083B5600C85662 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		6490748A198A5A5600D728CC /* UIImage+G8Filters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+G8Filters.h"; sourceTree = "<group>"; };
@@ -294,6 +296,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4AA351B81DE9B1B400207910 /* libz.tbd in Frameworks */,
 				4A0E42541DE763DA009EDDC7 /* liblept.a in Frameworks */,
 				4A0E42561DE763E3009EDDC7 /* libtesseract.a in Frameworks */,
 				4A0E42531DE763D5009EDDC7 /* libjpeg.a in Frameworks */,
@@ -497,6 +500,7 @@
 		64F74CCB172FD75F0068E657 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4AA351B71DE9B1B400207910 /* libz.tbd */,
 				73C0A7BA1A5955E200D823D4 /* TesseractOCR.framework */,
 				64907492198A6B9E00D728CC /* CoreImage.framework */,
 				64F74D77172FD8E90068E657 /* UIKit.framework */,
@@ -856,7 +860,6 @@
 		4A2992771DDE449700B2B523 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
@@ -887,7 +890,7 @@
 					"$(PROJECT_DIR)/TesseractOCR/libtiff-ios/dependencies/lib",
 					"$(PROJECT_DIR)/TesseractOCR/lib/mac",
 				);
-				MACH_O_TYPE = staticlib;
+				MACH_O_TYPE = mh_dylib;
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.g8production.${PRODUCT_NAME:rfc1034identifier}";
@@ -904,7 +907,6 @@
 		4A2992781DDE449700B2B523 /* Coverage */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
@@ -935,7 +937,7 @@
 					"$(PROJECT_DIR)/TesseractOCR/libtiff-ios/dependencies/lib",
 					"$(PROJECT_DIR)/TesseractOCR/lib/mac",
 				);
-				MACH_O_TYPE = staticlib;
+				MACH_O_TYPE = mh_dylib;
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.g8production.${PRODUCT_NAME:rfc1034identifier}";
@@ -952,7 +954,6 @@
 		4A2992791DDE449700B2B523 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
@@ -980,7 +981,7 @@
 					"$(PROJECT_DIR)/TesseractOCR/libtiff-ios/dependencies/lib",
 					"$(PROJECT_DIR)/TesseractOCR/lib/mac",
 				);
-				MACH_O_TYPE = staticlib;
+				MACH_O_TYPE = mh_dylib;
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.g8production.${PRODUCT_NAME:rfc1034identifier}";
@@ -1061,7 +1062,6 @@
 		73C0A78F1A592C2B00D823D4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
@@ -1109,7 +1109,6 @@
 		73C0A7901A592C2B00D823D4 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
@@ -1190,7 +1189,6 @@
 		F4EE1C7A1A612ADC007BB075 /* Coverage */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
