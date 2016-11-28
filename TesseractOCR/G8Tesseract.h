@@ -10,6 +10,7 @@
 #import "G8Image.h"
 #import "G8Constants.h"
 #import "G8TesseractDelegate.h"
+#import "G8ResultIterator.h"
 
 /**
  *  Default value of `sourceResolution` property.
@@ -141,6 +142,11 @@ extern NSInteger const kG8MaxCredibleResolution;
  *  A string of text that Tesseract has recognized from the target image.
  */
 @property (nonatomic, readonly) NSString *recognizedText;
+
+/**
+ * Returns iterator object for detailed examination of the recognition results
+ */
+- (G8ResultIterator*)createIterator;
 
 /**
  *  Make an HTML-formatted string with hOCR markup from the internal Tesseract

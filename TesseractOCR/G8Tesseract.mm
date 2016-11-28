@@ -16,6 +16,7 @@
 #import "G8TesseractParameters.h"
 #import "G8Constants.h"
 #import "G8RecognizedBlock.h"
+#import "G8ResultIterator-Private.h"
 
 #ifdef fract1
 #undef fract1
@@ -572,6 +573,10 @@ namespace tesseract {
     NSString *text = [NSString stringWithUTF8String:utf8Text];
     delete[] utf8Text;
     return text;
+}
+
+- (G8ResultIterator*)createIterator {
+    return [[G8ResultIterator alloc] initWithIterator:_tesseract->GetIterator()];
 }
 
 - (G8Orientation)orientation
