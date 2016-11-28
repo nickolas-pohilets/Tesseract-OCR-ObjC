@@ -158,7 +158,7 @@ namespace tesseract {
 
         if (self.absoluteDataPath == nil) {
             // config Tesseract to search trainedData in tessdata folder of the application bundle];
-            _absoluteDataPath = [NSBundle mainBundle].bundlePath;
+            _absoluteDataPath = [NSBundle mainBundle].resourcePath;
         }
         
         setenv("TESSDATA_PREFIX", [_absoluteDataPath stringByAppendingString:@"/"].fileSystemRepresentation, 1);
