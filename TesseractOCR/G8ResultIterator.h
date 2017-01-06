@@ -15,7 +15,8 @@
 - (void)restartParagraph;
 - (void)restartRow;
 
-- (bool)moveNext:(G8PageIteratorLevel)level;
+- (BOOL)isEmpty:(G8PageIteratorLevel)level;
+- (BOOL)moveNext:(G8PageIteratorLevel)level;
 
 - (NSComparisonResult)compare:(G8ResultIterator*)other;
 
@@ -28,5 +29,7 @@
 @property(nonatomic, readonly) CGFloat rowHeight;
 @property(nonatomic, readonly) CGFloat descender;
 @property(nonatomic, readonly) CGFloat ascender;
+
+- (NSString*)text:(G8PageIteratorLevel)level;
 
 @end

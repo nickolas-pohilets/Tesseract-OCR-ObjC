@@ -44,7 +44,11 @@
     _it->RestartRow();
 }
 
-- (bool)moveNext:(G8PageIteratorLevel)level {
+- (BOOL)isEmpty:(G8PageIteratorLevel)level {
+    return _it->Empty((tesseract::PageIteratorLevel)level);
+}
+
+- (BOOL)moveNext:(G8PageIteratorLevel)level {
     [self resetAttributes];
     return _it->Next((tesseract::PageIteratorLevel)level);
 }
@@ -105,6 +109,15 @@
     }
     return _ascender;
 }
+
+- (NSString*)text:(G8PageIteratorLevel)level {
+    char const * text = _it->GetUTF8Text((tesseract::PageIteratorLevel)level);
+    NSString* result = [NSString stringWithUTF8String:text];
+    delete [] text;
+    return result;
+}
+
+#pragma mark - Private
 
 - (void)getRowAttributes {
     _it->RowAttributes(&_rowHeight, &_descender, &_ascender);
