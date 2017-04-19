@@ -38,7 +38,7 @@ extern NSInteger const kG8MaxCredibleResolution;
  *
  *  @return The version string.
  */
-+ (NSString *)version;
++ (NSString * _Nonnull)version;
 
 /**
  *  Clear any library-level memory caches.
@@ -60,14 +60,14 @@ extern NSInteger const kG8MaxCredibleResolution;
  *          and Tesseract has been configured its engine for the languages
  *          specified by `isEngineConfigured` property.
  */
-@property (nonatomic, copy) NSString* language;
+@property (nonatomic, copy, nullable) NSString* language;
 
 /**
  *  The absolute path to the tessdata folder, which may exist in either the
  *  application bundle or in the Caches directory depending on the argument to
  *  `cachesRelatedDataPath` in the designated initializer.
  */
-@property (nonatomic, readonly, copy) NSString *absoluteDataPath;
+@property (nonatomic, readonly, copy, nullable) NSString *absoluteDataPath;
 
 /**
  *  The recognition mode to use. See `G8OCREngineMode` in G8Constants.h for the
@@ -95,7 +95,7 @@ extern NSInteger const kG8MaxCredibleResolution;
  *  @note It has been observed that `charWhitelist` is only respected when
  *        using the `G8OCREngineModeTesseractOnly` mode for `engineMode`.
  */
-@property (nonatomic, copy) NSString *charWhitelist;
+@property (nonatomic, copy, nullable) NSString *charWhitelist;
 
 /**
  *  A black list of characters that Tesseract should not recognize. Any
@@ -105,12 +105,12 @@ extern NSInteger const kG8MaxCredibleResolution;
  *  @note It has been observed that `charBlacklist` is only respected when
  *        using the `G8OCREngineModeTesseractOnly` mode for `engineMode`.
  */
-@property (nonatomic, copy) NSString *charBlacklist;
+@property (nonatomic, copy, nullable) NSString *charBlacklist;
 
 /**
  *  An image on which Tesseract should perform recognition.
  */
-@property (nonatomic, strong) G8Image *image;
+@property (nonatomic, strong, nullable) G8Image *image;
 
 /**
  *  A rectangle to specify the region of the image on which Tesseract should
@@ -141,12 +141,12 @@ extern NSInteger const kG8MaxCredibleResolution;
 /**
  *  A string of text that Tesseract has recognized from the target image.
  */
-@property (nonatomic, readonly) NSString *recognizedText;
+@property (nonatomic, readonly, nullable) NSString *recognizedText;
 
 /**
  * Returns iterator object for detailed examination of the recognition results
  */
-- (G8ResultIterator*)createIterator;
+- (G8ResultIterator* _Nonnull)createIterator;
 
 /**
  *  Make an HTML-formatted string with hOCR markup from the internal Tesseract
@@ -160,7 +160,7 @@ extern NSInteger const kG8MaxCredibleResolution;
  *  @return The HTML-formatted string with hOCR markup or nil if error occured 
  *          or the engine is not properly configured.
  */
-- (NSString *)recognizedHOCRForPageNumber:(int)pageNumber;
+- (NSString * _Nullable)recognizedHOCRForPageNumber:(int)pageNumber;
 
 /**
  *  Produces a PDF output with the pages sent to the function
@@ -169,7 +169,7 @@ extern NSInteger const kG8MaxCredibleResolution;
  *  @return NSData  representing output PDF file or nil if error occured or
  *                  the engine is not properly configured.
  */
-- (NSData *)recognizedPDFForImages:(NSArray*)images;
+- (NSData * _Nullable)recognizedPDFForImages:(NSArray* _Nonnull)images;
 
 /**
  *  Run Tesseract's page analysis on the target image.
@@ -178,7 +178,7 @@ extern NSInteger const kG8MaxCredibleResolution;
  *        folder to use this method. You can download this file from:
  *        https://code.google.com/p/tesseract-ocr/downloads/list
  */
-- (void)analyseLayout;
+- (BOOL)analyseLayout;
 
 /**
  *  The result of Tesseract's orientation analysis of the target image. See
@@ -233,7 +233,7 @@ extern NSInteger const kG8MaxCredibleResolution;
  *        `G8OCREngineModeTesseractOnly` mode for `engineMode`. It returns nil,
  *        if the engine is not properly configured.
  */
-@property (nonatomic, readonly) NSArray *characterChoices;
+@property (nonatomic, readonly, nullable) NSArray *characterChoices;
 
 /**
  *  Retrieve Tesseract's recognition result based on a provided resolution.
@@ -252,7 +252,7 @@ extern NSInteger const kG8MaxCredibleResolution;
  *
  *  @note The method returns nil, if the engine is not properly configured.
  */
-- (NSArray *)recognizedBlocksByIteratorLevel:(G8PageIteratorLevel)pageIteratorLevel;
+- (NSArray * _Nullable)recognizedBlocksByIteratorLevel:(G8PageIteratorLevel)pageIteratorLevel;
 
 #pragma mark - Debug methods
 
@@ -260,7 +260,7 @@ extern NSInteger const kG8MaxCredibleResolution;
  *  The result of Tesseract's internal thresholding on the target image or nil,
  *  if engine is not properly configured
  */
-@property (nonatomic, readonly) G8Image *thresholdedImage;
+@property (nonatomic, readonly, nullable) G8Image *thresholdedImage;
 
 /**
  *  Create a copy of the target image with boxes (and optionally labels) drawn 
@@ -272,14 +272,14 @@ extern NSInteger const kG8MaxCredibleResolution;
  *
  *  @return The resulting image.
  */
-- (G8Image *)imageWithBlocks:(NSArray *)blocks
-                    drawText:(BOOL)drawText
-                 thresholded:(BOOL)thresholded;
+- (G8Image * _Nonnull)imageWithBlocks:(NSArray * _Nonnull)blocks
+                             drawText:(BOOL)drawText
+                          thresholded:(BOOL)thresholded;
 
 /**
  *  An optional delegate for Tesseract's recognition.
  */
-@property (nonatomic, weak) id<G8TesseractDelegate> delegate;
+@property (nonatomic, weak, nullable) id<G8TesseractDelegate> delegate;
 
 /**
  *  The default initializer.
@@ -287,7 +287,7 @@ extern NSInteger const kG8MaxCredibleResolution;
  *          nor any other settings specified. You can set the language later, 
  *          using language property.
  */
-- (instancetype)init;
+- (instancetype _Nonnull)init;
 
 /**
  *  Initialize Tesseract with the provided language.
@@ -300,7 +300,7 @@ extern NSInteger const kG8MaxCredibleResolution;
  *          you have specified. Also you may ensure that Tesseract is properly
  *          initialized by checking `isEngineConfigured` property.
  */
-- (instancetype)initWithLanguage:(NSString*)language;
+- (instancetype _Nonnull)initWithLanguage:(NSString* _Nullable)language;
 
 /**
  *  Initialize Tesseract with the provided language and engine mode.
@@ -314,8 +314,8 @@ extern NSInteger const kG8MaxCredibleResolution;
  *          you have specified. Also you may ensure that Tesseract is properly
  *          initialized by checking `isEngineConfigured` property.
  */
-- (instancetype)initWithLanguage:(NSString*)language
-                      engineMode:(G8OCREngineMode)engineMode;
+- (instancetype _Nonnull)initWithLanguage:(NSString* _Nullable)language
+                               engineMode:(G8OCREngineMode)engineMode;
 
 /**
  *  Initialize Tesseract with the provided language and engine mode.
@@ -347,11 +347,11 @@ extern NSInteger const kG8MaxCredibleResolution;
  *          initialized by checking `isEngineConfigured` property.
  */
 
-- (instancetype)initWithLanguage:(NSString *)language
-                configDictionary:(NSDictionary *)configDictionary
-                 configFileNames:(NSArray *)configFileNames
-           cachesRelatedDataPath:(NSString *)cachesRelatedDataPath
-                      engineMode:(G8OCREngineMode)engineMode;
+- (instancetype _Nonnull)initWithLanguage:(NSString * _Nullable)language
+                         configDictionary:(NSDictionary * _Nullable)configDictionary
+                          configFileNames:(NSArray * _Nullable)configFileNames
+                    cachesRelatedDataPath:(NSString * _Nullable)cachesRelatedDataPath
+                               engineMode:(G8OCREngineMode)engineMode;
 
 /**
  *  Initialize Tesseract with the provided language and engine mode.
@@ -390,11 +390,11 @@ extern NSInteger const kG8MaxCredibleResolution;
  *          you have specified. Also you may ensure that Tesseract is properly
  *          initialized by checking `isEngineConfigured` property.
  */
-- (instancetype)initWithLanguage:(NSString *)language
-                configDictionary:(NSDictionary *)configDictionary
-                 configFileNames:(NSArray *)configFileNames
-                absoluteDataPath:(NSString *)absoluteDataPath
-                      engineMode:(G8OCREngineMode)engineMode NS_DESIGNATED_INITIALIZER;
+- (instancetype _Nonnull)initWithLanguage:(NSString * _Nonnull)language
+                         configDictionary:(NSDictionary * _Nullable)configDictionary
+                          configFileNames:(NSArray * _Nullable)configFileNames
+                         absoluteDataPath:(NSString * _Nullable)absoluteDataPath
+                               engineMode:(G8OCREngineMode)engineMode NS_DESIGNATED_INITIALIZER;
 
 /**
  *  Set a Tesseract variable. See G8TesseractParameters.h for the available
@@ -403,7 +403,7 @@ extern NSInteger const kG8MaxCredibleResolution;
  *  @param value The value to use for the option.
  *  @param key   The option to set.
  */
-- (void)setVariableValue:(NSString *)value forKey:(NSString *)key;
+- (void)setVariableValue:(NSString * _Nonnull)value forKey:(NSString * _Nonnull)key;
 
 /**
  *  Returns a Tesseract variable for the given key. See G8TesseractParameters.h 
@@ -415,7 +415,7 @@ extern NSInteger const kG8MaxCredibleResolution;
  *              nil otherwise. Also returns nil if the engine is not properly 
  *              configured. Refer to `isEngineConfigured` property.
  */
-- (NSString*)variableValueForKey:(NSString *)key;
+- (NSString* _Nullable)variableValueForKey:(NSString * _Nonnull)key;
 
 /**
  *  Set Tesseract variables using a dictionary. See G8TesseractParameters.h for 
@@ -425,7 +425,7 @@ extern NSInteger const kG8MaxCredibleResolution;
  *
  *  @param dictionary The dictionary of key/value pairs to set for Tesseract.
  */
-- (void)setVariablesFromDictionary:(NSDictionary *)dictionary;
+- (void)setVariablesFromDictionary:(NSDictionary * _Nonnull)dictionary;
 
 /**
  *  Execute recognition on the target image.

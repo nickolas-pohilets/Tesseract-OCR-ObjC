@@ -337,7 +337,9 @@ namespace tesseract {
         return self.variables[key];
     } else {
         STRING val;
-        _tesseract->GetVariableAsString(key.UTF8String, &val);
+        if (_tesseract->GetVariableAsString(key.UTF8String, &val)) {
+            return nil;
+        }
         return [NSString stringWithUTF8String:val.string()];
     }
 }
@@ -603,14 +605,14 @@ namespace tesseract {
     return _deskewAngle;
 }
 
-- (void)analyseLayout
+- (BOOL)analyseLayout
 {
     // Only perform the layout analysis if we haven't already
-    if (self.layoutAnalysed) return;
+    if (self.layoutAnalysed) return YES;
     
     if (!self.isEngineConfigured) {
         NSLog(@"Error! Cannot perform layout analysis because the engine is not properly configured!");
-        return;
+        return NO;
     }
 
     tesseract::Orientation orientation;
@@ -621,7 +623,7 @@ namespace tesseract {
     tesseract::PageIterator *iterator = _tesseract->AnalyseLayout();
     if (iterator == NULL) {
         NSLog(@"Can't analyse layout. Make sure 'osd.traineddata' available in 'tessdata'.");
-        return;
+        return NO;
     }
 
     iterator->Orientation(&orientation, &direction, &order, &deskewAngle);
@@ -633,6 +635,7 @@ namespace tesseract {
     self.deskewAngle = deskewAngle;
 
     self.layoutAnalysed = YES;
+    return YES;
 }
 
 
